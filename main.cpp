@@ -248,19 +248,3 @@ int main(int argc, char** argv)
 
 	return 0;
 }
-
-/*
-
-TODO:
-* could this have uses in reservoir sampling?
-* could show or explain how time increases with number of samples.
-* could have another usage case, choosing candidates to fill out a texture or something. maybe making a blue noise texture?
-
-Note:
-* 73% of the candidates to test is nice.
-* variance is high though.
-* algorithms? https://mastodon.gamedev.place/@demofox/110030932447201035
- * ransac? https://en.wikipedia.org/wiki/Random_sample_consensus
-* random placement of objects?
-
-*/
