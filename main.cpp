@@ -257,5 +257,6 @@ Note:
 * 73% of the candidates to test is nice.
 * variance is high though.
 * algorithms? https://mastodon.gamedev.place/@demofox/110030932447201035
+ * ransac? https://en.wikipedia.org/wiki/Random_sample_consensus
 
 */
