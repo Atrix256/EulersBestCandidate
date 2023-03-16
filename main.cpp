@@ -41,10 +41,13 @@ float RandomFloat01(pcg32_random_t& rng)
 	return ldexpf((float)pcg32_random_r(&rng), -32);
 }
 
-float Distance(const float2& A, const float2& B)
+// https://blog.demofox.org/2017/10/01/calculating-the-distance-between-points-in-wrap-around-toroidal-space/
+float DistanceWrap(const float2& A, const float2& B)
 {
-	float dx = A[0] - B[0];
-	float dy = A[1] - B[1];
+	float dx = std::abs(A[0] - B[0]);
+	dx = std::min(dx, 1.0f - dx);
+	float dy = std::abs(A[1] - B[1]);
+	dy = std::min(dy, 1.0f - dy);
 	return std::sqrt(dx * dx + dy * dy);
 }
 
@@ -79,7 +82,7 @@ std::vector<float2> MitchellsBestCandidate(int count, int& hotLoopCount)
 			// the score is the distance to the closest existing point
 			for (int pointIndex = 0; pointIndex < newPointIndex; ++pointIndex)
 			{
-				candidateScore = std::min(candidateScore, Distance(candidate, ret[pointIndex]));
+				candidateScore = std::min(candidateScore, DistanceWrap(candidate, ret[pointIndex]));
 				hotLoopCount++;
 			}
 
@@ -127,7 +130,7 @@ std::vector<float2> EulersBestCandidate(int count, int& hotLoopCount)
 			// the score is the distance to the closest existing point
 			for (int pointIndex = 0; pointIndex < newPointIndex; ++pointIndex)
 			{
-				candidateScore = std::min(candidateScore, Distance(candidate, ret[pointIndex]));
+				candidateScore = std::min(candidateScore, DistanceWrap(candidate, ret[pointIndex]));
 				hotLoopCount++;
 			}
 
@@ -258,5 +261,6 @@ Note:
 * variance is high though.
 * algorithms? https://mastodon.gamedev.place/@demofox/110030932447201035
  * ransac? https://en.wikipedia.org/wiki/Random_sample_consensus
+* random placement of objects?
 
 */
