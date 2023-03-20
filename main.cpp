@@ -168,6 +168,14 @@ void SaveImage(const std::vector<float2>& points, const char* baseFileName, int 
 	char fileName[1024];
 	sprintf_s(fileName, "%s%i.png", baseFileName, fileIndex);
 	stbi_write_png(fileName, imageSize, imageSize, 1, pixels.data(), 0);
+
+	// also write the points to a text file
+	FILE* file = nullptr;
+	sprintf_s(fileName, "%s%i.txt", baseFileName, fileIndex);
+	fopen_s(&file, fileName, "wb");
+	for (const float2& point : points)
+		fprintf(file, "%f, %f\n", point[0], point[1]);
+	fclose(file);
 }
 
 int main(int argc, char** argv)
